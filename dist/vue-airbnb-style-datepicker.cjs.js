@@ -243,6 +243,7 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
         selectedText: '#fff',
         hoveredText: '#fff',
         hoverRangeText: '#fff',
+        selectedRangeText: '#fff',
         text: '#565a5c',
         inRangeBorder: '#33dacd',
         inHoverRangeBorder: '#43cec3',
@@ -541,7 +542,7 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
           : isInHoverRange
           ? this.colors.hoverRangeText
           : isInRange
-          ? this.colors.selectedText
+          ? this.colors.selectedRangeText
           : this.colors.text,
         border: isSelected
           ? '1px double ' + this.colors.selected
@@ -764,6 +765,7 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
         this.colors.inRange = colors.inRange || this.colors.inRange;
         this.colors.inHoverRange = colors.inHoverRange || this.colors.inHoverRange;
         this.colors.selectedText = colors.selectedText || this.colors.selectedText;
+        this.colors.selectedRangeText = colors.selectedRangeText || this.colors.selectedRangeText;
         this.colors.hoverRangeText = colors.hoverRangeText || this.colors.hoverRangeText;
         this.colors.hoveredText = colors.hoveredText || this.colors.hoveredText;
         this.colors.text = colors.text || this.colors.text;
