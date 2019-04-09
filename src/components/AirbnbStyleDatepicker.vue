@@ -11,6 +11,7 @@
       <div class="asd__mobile-header asd__mobile-only" v-if="showFullscreen">
         <button
           class="asd__mobile-close"
+          type="button"
           @click="closeDatepicker"
           :aria-label="ariaLabels.closeDatepicker"
         >
