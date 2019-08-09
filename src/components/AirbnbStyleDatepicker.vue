@@ -48,7 +48,7 @@
           :key="month"
           :style="[monthWidthStyles, { left: width * index + 'px' }]"
         >
-          <div class="asd__day-title" v-for="day in daysShort" :key="day">{{ day }}</div>
+          <div class="asd__day-title" v-for="(day, index) in daysShort" :key="index">{{ day }}</div>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
             v-for="(month, monthIndex) in months"
             :key="month.firstDateOfMonth"
             class="asd__month"
-            :class="{ hidden: monthIndex === 0 || monthIndex > showMonths }"
+            :class="{'asd__month--hidden': monthIndex === 0 || monthIndex > showMonths}"
             :style="monthWidthStyles"
           >
             <div class="asd__month-name">
@@ -75,9 +75,7 @@
                   :value="monthName"
                   :disabled="isMonthDisabled(month.year, idx)"
                   :key="`month-${monthIndex}-${monthName}`"
-                >
-                  {{ monthName }}
-                </option>
+                >{{ monthName }}</option>
               </select>
               <span v-else>{{ month.monthName }}</span>
 
@@ -116,7 +114,7 @@
                       isDateVisible(fullDate) && isSameDate(focusedDate, fullDate) ? 0 : -1
                     "
                     :aria-label="isDateVisible(fullDate) ? getAriaLabelForDate(fullDate) : false"
-                    :class="{
+                    :class="[{
                       'asd__day--enabled': dayNumber !== 0,
                       'asd__day--empty': dayNumber === 0,
                       'asd__day--disabled': isDisabled(fullDate),
@@ -124,9 +122,10 @@
                         fullDate && (selectedDate1 === fullDate || selectedDate2 === fullDate),
                       'asd__day--in-range': isInRange(fullDate),
                       'asd__day--today': fullDate && isToday(fullDate),
+                      'asd__day--hovered': isHoveredInRange(fullDate),
                       'asd__selected-date-one': fullDate && fullDate === selectedDate1,
                       'asd__selected-date-two': fullDate && fullDate === selectedDate2,
-                    }"
+                    }, customizedDateClass(fullDate)]"
                     :style="getDayStyles(fullDate)"
                     @mouseover="
                       () => {
@@ -193,9 +192,7 @@
           @click="apply"
           :style="{ color: colors.selected }"
           type="button"
-        >
-          {{ texts.apply }}
-        </button>
+        >{{ texts.apply }}</button>
       </div>
       <div v-if="showShortcutsMenuTrigger" class="asd__keyboard-shortcuts-trigger-wrapper">
         <button
@@ -260,6 +257,7 @@ export default {
     disabledDates: { type: Array, default: () => [] },
     enabledDates: { type: Array, default: () => [] },
     enableHoverRange: { type: Boolean, default: true },
+    customizedDates: { type: Array, default: () => [] },
     showActionButtons: { type: Boolean, default: true },
     showShortcutsMenuTrigger: { type: Boolean, default: true },
     showMonthYearSelect: { type: Boolean, default: false },
@@ -292,6 +290,7 @@ export default {
         inRangeBorder: '#33dacd',
         inHoverRangeBorder: '#43cec3',
         disabled: '#fff',
+        hoveredInRange: '#67f6ee',
       },
       sundayFirst: false,
       ariaLabels: {
@@ -331,7 +330,7 @@ export default {
         { symbol: '↵', label: 'Select the date in focus', symbolDescription: 'Enter key' },
         {
           symbol: '←/→',
-          label: 'Move backward (left) and forward (down) by one day.',
+          label: 'Move backward (left) and forward (right) by one day.',
           symbolDescription: 'Left or right arrow keys',
         },
         {
@@ -506,7 +505,9 @@ export default {
     },
     trigger(newValue, oldValue) {
       if (newValue) {
-        this.openDatepicker()
+        setTimeout(() => {
+          this.openDatepicker()
+        }, 0)
       }
     },
   },
@@ -567,6 +568,7 @@ export default {
       const isInRange = this.isInRange(date)
       const isInHoverRange = this.isInHoverRange(date)
       const isDisabled = this.isDisabled(date)
+      const isHoveredInRange = this.isHoveredInRange(date)
 
       let styles = {
         width: (this.width - 30) / 7 + 'px',
@@ -576,6 +578,8 @@ export default {
           ? this.colors.hovered
           : isInHoverRange
           ? this.colors.inHoverRange
+          : isHoveredInRange
+          ? this.colors.hoveredInRange
           : isInRange
           ? this.colors.inRange
           : '',
@@ -802,6 +806,7 @@ export default {
         this.colors.hovered = colors.hovered || this.colors.hovered
         this.colors.inRange = colors.inRange || this.colors.inRange
         this.colors.inHoverRange = colors.inHoverRange || this.colors.inHoverRange
+        this.colors.hoveredInRange = colors.hoveredInRange || this.colors.hoveredInRange
         this.colors.selectedText = colors.selectedText || this.colors.selectedText
         this.colors.selectedRangeText = colors.selectedRangeText || this.colors.selectedRangeText
         this.colors.hoverRangeText = colors.hoverRangeText || this.colors.hoverRangeText
@@ -937,10 +942,11 @@ export default {
       this.focusedDate = formattedDate
       const dateElement = this.$refs[`date-${formattedDate}`]
       // handle .focus() on ie11 by adding a short timeout
-      if (dateElement)
+      if (dateElement && dateElement.length) {
         setTimeout(function() {
           dateElement[0].focus()
         }, 10)
+      }
     },
     resetFocusedDate(setToFirst) {
       if (this.focusedDate && !this.isDateVisible(this.focusedDate)) {
@@ -988,6 +994,16 @@ export default {
       }
       return isAfter(date, this.selectedDate1) && isBefore(date, this.hoverDate)
     },
+    isHoveredInRange(date) {
+      if (this.isSingleMode || this.allDatesSelected) {
+        return false
+      }
+
+      return (
+        (isAfter(date, this.selectedDate1) && isBefore(date, this.hoverDate)) ||
+        (isAfter(date, this.hoverDate) && isBefore(date, this.selectedDate1))
+      )
+    },
     isBeforeMinDate(date) {
       if (!this.minDate) {
         return false
@@ -1014,6 +1030,16 @@ export default {
       } else {
         return this.disabledDates.indexOf(date) > -1
       }
+    },
+    customizedDateClass(date) {
+      var customizedClasses = ''
+      if (this.customizedDates.length > 0) {
+        for (var i = 0; i < this.customizedDates.length; i++) {
+          if (this.customizedDates[i].dates.indexOf(date) > -1)
+            customizedClasses += ` asd__day--${this.customizedDates[i].cssClass}`
+        }
+      }
+      return customizedClasses
     },
     isDisabled(date) {
       return this.isDateDisabled(date) || this.isBeforeMinDate(date) || this.isAfterEndDate(date)
