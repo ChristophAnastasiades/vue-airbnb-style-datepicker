@@ -185,6 +185,7 @@
           </ul>
         </div>
       </div>
+      <div>Die meisten verfügbaren Unterkünfte finden Sie bei An- und Abreise an einem Samstag.</div>
       <div class="asd__action-buttons" v-if="mode !== 'single' && showActionButtons">
         <button @click="closeDatepickerCancel" type="button">{{ texts.cancel }}</button>
         <button
