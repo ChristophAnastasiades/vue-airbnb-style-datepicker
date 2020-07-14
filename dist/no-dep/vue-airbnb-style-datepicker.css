@@ -288,8 +288,6 @@
     float: right;
     text-align: right; }
     .flexible_range_select .flexible_range_select__info svg {
-      position: relative;
-      top: 6px;
       width: 20px;
       height: 20px; }
 
