@@ -8,6 +8,7 @@
       :style="showFullscreen ? undefined : wrapperStyles"
       v-click-outside="handleClickOutside"
     >
+      <h2 v-if="flexibleSearch">Flexibler Reisezeitraum</h2>
       <div class="asd__mobile-header asd__mobile-only" v-if="showFullscreen">
         <button
           class="asd__mobile-close"
@@ -27,7 +28,7 @@
             <svg v-else viewBox="0 0 1000 1000">
               <path
                 d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z"
-              />
+              ></path>
             </svg>
           </button>
         </div>
@@ -37,7 +38,7 @@
             <svg v-else viewBox="0 0 1000 1000">
               <path
                 d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"
-              />
+              ></path>
             </svg>
           </button>
         </div>
@@ -185,6 +186,31 @@
           </ul>
         </div>
       </div>
+      <div v-if="flexibleSearch" class="flexible_range_select">
+        <h4>Wählen Sie Ihre gewünschte Reisedauer:</h4>
+        <select name="flexibleSearchRange" v-model="selectedFlexibleSearchOption">
+          <option v-for="option in flexibleSearchOptions" :key="'flexibleSearchOptions' + option" :value="option">
+            {{ option }} <template v-if="option === 1">Nacht</template><template v-else>Nächte</template><template v-if="option % 7 === 0"> ({{ option / 7 }} Woche<template v-if="option / 7 > 1">n</template>)</template>
+          </option>
+        </select>
+        <div class="flexible_range_select__info">
+          <div>
+            Möglichen Reisezeitraum wählen
+            <svg viewBox="0 0 75 75" @mouseover="showFlexibleRangeInfo(1, 'mouseover')" @click="showFlexibleRangeInfo(1, 'click')">
+              <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
+            </svg>
+          </div>
+          <div v-if="flexibleRangeInfo === 1" class="showFlexibleRangeInfo__text">Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.</div>
+          <div>
+            Gewünschte Reisedauer wählen
+            <svg viewBox="0 0 75 75" @mouseover="showFlexibleRangeInfo(2, 'mouseover')" @click="showFlexibleRangeInfo(2, 'click')">
+              <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
+            </svg>
+          </div>
+          <div v-if="flexibleRangeInfo === 2" class="showFlexibleRangeInfo__text">Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.</div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
       <div class="datepicker_additional_information">Die meisten verfügbaren Unterkünfte finden Sie bei An- und Abreise an einem Samstag.</div>
       <div class="asd__action-buttons" v-if="mode !== 'single' && showActionButtons">
         <button @click="closeDatepickerCancel" type="button">{{ texts.cancel }}</button>
@@ -231,6 +257,7 @@ import endOfWeek from 'date-fns/end_of_week'
 import isBefore from 'date-fns/is_before'
 import isAfter from 'date-fns/is_after'
 import isValid from 'date-fns/is_valid'
+import differenceInDays from 'date-fns/difference_in_days'
 import { debounce, copyObject, findAncestor, randomString } from './../helpers'
 import vClickOutside from 'v-click-outside'
 import ResizeSelect from '../directives/ResizeSelect'
@@ -269,6 +296,7 @@ export default {
     },
     trigger: { type: Boolean, default: false },
     closeAfterSelect: { type: Boolean, default: false },
+    flexibleSearch: { type: Boolean, default: false }
   },
   data() {
     return {
@@ -382,9 +410,21 @@ export default {
       isMobile: undefined,
       isTablet: undefined,
       triggerElement: undefined,
+      flexibleRangeInfo: null,
+      selectedFlexibleSearchOption: 1
     }
   },
   computed: {
+    flexibleSearchOptions() {
+      let result = 7
+      if (this.selectedDate1 && this.selectedDate2) {
+        result = differenceInDays(
+          new Date(format(this.selectedDate2, this.dateFormat)),
+          new Date(format(this.selectedDate1, this.dateFormat))
+        )
+      }
+      return result
+    },
     wrapperClasses() {
       return {
         'asd__wrapper--datepicker-open': this.showDatepicker,
@@ -563,6 +603,11 @@ export default {
     this.triggerElement.removeEventListener('click', this._handleWindowClickEvent)
   },
   methods: {
+    showFlexibleRangeInfo(id, eventType) {
+      if ((window.innerWidth < 768 && eventType === 'click') || (window.innerWidth >= 768 && eventType === 'mouseover')) {
+        this.flexibleRangeInfo = this.flexibleRangeInfo === id ? null : id
+      }
+    },
     getDayStyles(date) {
       const isSelected = this.isSelected(date)
       const isHovered = this.isHovered(date)
@@ -1475,5 +1520,66 @@ $transition-time: 0.3s;
       padding: 0;
     }
   }
+}
+.flexible_range_select {
+  padding: 0 15px;
+  margin: 25px 0;
+  text-align: left;
+
+  select {
+    padding: 6px;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+
+  h4 {
+    margin-bottom: 10px;
+  }
+
+  .flexible_range_select__info {
+    float: right;
+    text-align: right;
+
+    svg {
+      position: relative;
+      top: 6px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .showFlexibleRangeInfo__text {
+      z-index: 2;
+      position: absolute;
+      margin-top: 5px;
+      right: 5px;
+      padding: 10px;
+      width: 200px;
+      white-space: pre-wrap;
+      text-align: center;
+      border-radius: 5px;
+      background-color: #2470ab;
+      color: #fff;
+
+      &::before {
+        position: absolute;
+        top: -5px;
+        right: 16px;
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 5px 5px 5px;
+        border-color: transparent transparent #2471ab transparent;
+      }
+    }
+  }
+}
+.datepicker_additional_information {
+  margin-top: 25px;
+}
+.clearfix {
+  clear: both;
 }
 </style>
