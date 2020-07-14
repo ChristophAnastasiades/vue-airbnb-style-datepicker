@@ -194,18 +194,38 @@
           </option>
         </select>
         <div class="flexible_range_select__info">
-          <div v-tooltip="'Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.'">
-            Möglichen Reisezeitraum wählen
-            <svg viewBox="0 0 75 75">
-              <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
-            </svg>
-          </div>
-          <div v-tooltip="'Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.'">
-            Gewünschte Reisedauer wählen
-            <svg viewBox="0 0 75 75">
-              <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
-            </svg>
-          </div>
+          <popper
+            trigger="hover"
+            :options="{
+              placement: 'top'
+            }
+            "
+          >
+            <div class="popper">Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.</div>
+
+            <div slot="reference">
+              Möglichen Reisezeitraum wählen
+              <svg viewBox="0 0 75 75">
+                <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
+              </svg>
+            </div>
+          </popper>
+          <popper
+            trigger="hover"
+            :options="{
+              placement: 'top'
+            }
+            "
+          >
+            <div class="popper">Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.</div>
+
+            <div slot="reference">
+              Gewünschte Reisedauer wählen
+              <svg viewBox="0 0 75 75">
+                <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
+              </svg>
+            </div>
+          </popper>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -259,14 +279,17 @@ import differenceInDays from 'date-fns/difference_in_days'
 import { debounce, copyObject, findAncestor, randomString } from './../helpers'
 import vClickOutside from 'v-click-outside'
 import ResizeSelect from '../directives/ResizeSelect'
-import tooltip from 'vue-simple-tooltip'
+import Popper from 'vue-popperjs';
+import 'vue-popperjs/dist/vue-popper.css';
 
 export default {
   name: 'AirbnbStyleDatepicker',
   directives: {
     clickOutside: vClickOutside.directive,
-    resizeSelect: ResizeSelect,
-    tooltip: tooltip
+    resizeSelect: ResizeSelect
+  },
+  components: {
+    'popper': Popper
   },
   props: {
     triggerElementId: { type: String },
@@ -1548,5 +1571,35 @@ $transition-time: 0.3s;
 }
 .clearfix {
   clear: both;
+}
+.v-tooltip {
+  max-width: 200px;
+}
+.popper {
+  padding: 10px;
+  width: 200px;
+  white-space: pre-wrap;
+  background-color: #2470ab;
+  color: #fff;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: none;
+  font-size: 1rem;
+
+  &::before {
+    position: absolute;
+    bottom: -5px;
+    left: 15px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 7px 7px 0 7px;
+    border-color: #2471ab transparent transparent transparent;
+  }
+
+  .popper .popper__arrow {
+    display: none;
+  }
 }
 </style>

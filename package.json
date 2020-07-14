@@ -81,6 +81,6 @@
   },
   "dependencies": {
     "v-click-outside": "^2.0.1",
-    "vue-simple-tooltip": "^1.0.12"
+    "vue-popperjs": "^2.3.0"
   }
 }
