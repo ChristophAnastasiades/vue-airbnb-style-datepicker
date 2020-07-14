@@ -194,15 +194,15 @@
           </option>
         </select>
         <div class="flexible_range_select__info">
-          <div>
+          <div v-tooltip="'Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.'">
             Möglichen Reisezeitraum wählen
-            <svg viewBox="0 0 75 75" v-tooltip="'Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.'">
+            <svg viewBox="0 0 75 75">
               <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
             </svg>
           </div>
-          <div>
+          <div v-tooltip="'Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.'">
             Gewünschte Reisedauer wählen
-            <svg viewBox="0 0 75 75" v-tooltip="'Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.'">
+            <svg viewBox="0 0 75 75">
               <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
             </svg>
           </div>
@@ -1538,8 +1538,6 @@ $transition-time: 0.3s;
     text-align: right;
 
     svg {
-      position: relative;
-      top: 6px;
       width: 20px;
       height: 20px;
     }
