@@ -271,3 +271,52 @@
     font-size: 1.6em;
     font-weight: bold;
     padding: 0; }
+
+.flexible_range_select {
+  padding: 0 15px;
+  margin: 25px 0;
+  text-align: left; }
+  .flexible_range_select select {
+    padding: 6px;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px; }
+  .flexible_range_select h4 {
+    margin-bottom: 10px; }
+  .flexible_range_select .flexible_range_select__info {
+    float: right;
+    text-align: right; }
+    .flexible_range_select .flexible_range_select__info svg {
+      position: relative;
+      top: 6px;
+      width: 20px;
+      height: 20px; }
+    .flexible_range_select .flexible_range_select__info .showFlexibleRangeInfo__text {
+      z-index: 2;
+      position: absolute;
+      margin-top: 5px;
+      right: 5px;
+      padding: 10px;
+      width: 200px;
+      white-space: pre-wrap;
+      text-align: center;
+      border-radius: 5px;
+      background-color: #2470ab;
+      color: #fff; }
+      .flexible_range_select .flexible_range_select__info .showFlexibleRangeInfo__text::before {
+        position: absolute;
+        top: -5px;
+        right: 16px;
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 5px 5px 5px;
+        border-color: transparent transparent #2471ab transparent; }
+
+.datepicker_additional_information {
+  margin-top: 25px; }
+
+.clearfix {
+  clear: both; }
