@@ -196,18 +196,16 @@
         <div class="flexible_range_select__info">
           <div>
             Möglichen Reisezeitraum wählen
-            <svg viewBox="0 0 75 75" @mouseover="showFlexibleRangeInfo(1, 'mouseover')" @click="showFlexibleRangeInfo(1, 'click')">
+            <svg viewBox="0 0 75 75" v-tooltip="'Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.'">
               <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
             </svg>
           </div>
-          <div v-if="flexibleRangeInfo === 1" class="showFlexibleRangeInfo__text">Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.</div>
           <div>
             Gewünschte Reisedauer wählen
-            <svg viewBox="0 0 75 75" @mouseover="showFlexibleRangeInfo(2, 'mouseover')" @click="showFlexibleRangeInfo(2, 'click')">
+            <svg viewBox="0 0 75 75" v-tooltip="'Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.'">
               <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
             </svg>
           </div>
-          <div v-if="flexibleRangeInfo === 2" class="showFlexibleRangeInfo__text">Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.</div>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -261,12 +259,14 @@ import differenceInDays from 'date-fns/difference_in_days'
 import { debounce, copyObject, findAncestor, randomString } from './../helpers'
 import vClickOutside from 'v-click-outside'
 import ResizeSelect from '../directives/ResizeSelect'
+import tooltip from 'vue-simple-tooltip'
 
 export default {
   name: 'AirbnbStyleDatepicker',
   directives: {
     clickOutside: vClickOutside.directive,
     resizeSelect: ResizeSelect,
+    tooltip: tooltip
   },
   props: {
     triggerElementId: { type: String },
@@ -603,11 +603,6 @@ export default {
     this.triggerElement.removeEventListener('click', this._handleWindowClickEvent)
   },
   methods: {
-    showFlexibleRangeInfo(id, eventType) {
-      if ((window.innerWidth < 768 && eventType === 'click') || (window.innerWidth >= 768 && eventType === 'mouseover')) {
-        this.flexibleRangeInfo = this.flexibleRangeInfo === id ? null : id
-      }
-    },
     getDayStyles(date) {
       const isSelected = this.isSelected(date)
       const isHovered = this.isHovered(date)
@@ -1547,32 +1542,6 @@ $transition-time: 0.3s;
       top: 6px;
       width: 20px;
       height: 20px;
-    }
-
-    .showFlexibleRangeInfo__text {
-      z-index: 2;
-      position: absolute;
-      margin-top: 5px;
-      right: 5px;
-      padding: 10px;
-      width: 200px;
-      white-space: pre-wrap;
-      text-align: center;
-      border-radius: 5px;
-      background-color: #2470ab;
-      color: #fff;
-
-      &::before {
-        position: absolute;
-        top: -5px;
-        right: 16px;
-        content: '';
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 5px 5px 5px;
-        border-color: transparent transparent #2471ab transparent;
-      }
     }
   }
 }
