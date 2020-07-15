@@ -300,28 +300,8 @@
 .v-tooltip {
   max-width: 200px; }
 
-.popper {
-  padding: 10px;
-  width: 200px;
-  white-space: pre-wrap;
-  background-color: #2470ab;
-  color: #fff;
-  border: 0;
-  border-radius: 5px;
-  box-shadow: none;
-  font-size: 1rem; }
-  .popper::before {
-    position: absolute;
-    bottom: -5px;
-    left: 15px;
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 7px 7px 0 7px;
-    border-color: #2471ab transparent transparent transparent; }
-  .popper .popper .popper__arrow {
-    display: none; }
+select[name="flexibleSearchRange"] {
+  margin-bottom: 15px; }
 
 
 .popper {

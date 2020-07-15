@@ -197,7 +197,7 @@
           <popper
             trigger="hover"
             :options="{
-              placement: 'top'
+              placement: 'top-end'
             }
             "
           >
@@ -213,7 +213,7 @@
           <popper
             trigger="hover"
             :options="{
-              placement: 'top'
+              placement: 'top-end'
             }
             "
           >
@@ -536,6 +536,9 @@ export default {
     },
   },
   watch: {
+    selectedFlexibleSearchOption(newValue, oldValue) {
+      this.$emit('flexible-date-range-selected', newValue)
+    },
     selectedDate1(newValue, oldValue) {
       let newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
       this.$emit('date-one-selected', newDate)
@@ -615,6 +618,10 @@ export default {
     this.$el.addEventListener('keydown', this.trapKeyboardInput)
     this.triggerElement.addEventListener('keyup', this.handleTriggerInput)
     this.triggerElement.addEventListener('click', this._handleWindowClickEvent)
+
+    if (this.flexibleSearch) {
+      this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption)
+    }
   },
   destroyed() {
     window.removeEventListener('resize', this._handleWindowResizeEvent)
@@ -1575,31 +1582,7 @@ $transition-time: 0.3s;
 .v-tooltip {
   max-width: 200px;
 }
-.popper {
-  padding: 10px;
-  width: 200px;
-  white-space: pre-wrap;
-  background-color: #2470ab;
-  color: #fff;
-  border: 0;
-  border-radius: 5px;
-  box-shadow: none;
-  font-size: 1rem;
-
-  &::before {
-    position: absolute;
-    bottom: -5px;
-    left: 15px;
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 7px 7px 0 7px;
-    border-color: #2471ab transparent transparent transparent;
-  }
-
-  .popper .popper__arrow {
-    display: none;
-  }
+select[name="flexibleSearchRange"] {
+  margin-bottom: 15px;
 }
 </style>
