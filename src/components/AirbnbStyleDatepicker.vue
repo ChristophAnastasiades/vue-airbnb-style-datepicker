@@ -537,6 +537,9 @@ export default {
     },
   },
   watch: {
+    selectedFlexibleSearchOptionProp(newValue) {
+      this.selectedFlexibleSearchOption = newValue
+    },
     selectedFlexibleSearchOption(newValue, oldValue) {
       this.$emit('flexible-date-range-selected', newValue)
     },

@@ -3576,6 +3576,9 @@
       },
     },
     watch: {
+      selectedFlexibleSearchOptionProp: function selectedFlexibleSearchOptionProp(newValue) {
+        this.selectedFlexibleSearchOption = newValue;
+      },
       selectedFlexibleSearchOption: function selectedFlexibleSearchOption(newValue, oldValue) {
         this.$emit('flexible-date-range-selected', newValue);
       },

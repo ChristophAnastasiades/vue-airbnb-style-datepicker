@@ -449,6 +449,9 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
     },
   },
   watch: {
+    selectedFlexibleSearchOptionProp: function selectedFlexibleSearchOptionProp(newValue) {
+      this.selectedFlexibleSearchOption = newValue;
+    },
     selectedFlexibleSearchOption: function selectedFlexibleSearchOption(newValue, oldValue) {
       this.$emit('flexible-date-range-selected', newValue);
     },
