@@ -319,7 +319,8 @@ export default {
     },
     trigger: { type: Boolean, default: false },
     closeAfterSelect: { type: Boolean, default: false },
-    flexibleSearch: { type: Boolean, default: false }
+    flexibleSearch: { type: Boolean, default: false },
+    selectedFlexibleSearchOptionProp: { type: Number, default: 1 }
   },
   data() {
     return {
@@ -618,6 +619,8 @@ export default {
     this.$el.addEventListener('keydown', this.trapKeyboardInput)
     this.triggerElement.addEventListener('keyup', this.handleTriggerInput)
     this.triggerElement.addEventListener('click', this._handleWindowClickEvent)
+
+    this.selectedFlexibleSearchOption = this.selectedFlexibleSearchOptionProp
 
     if (this.flexibleSearch) {
       this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption)
