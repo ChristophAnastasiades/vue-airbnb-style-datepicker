@@ -558,10 +558,12 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
     toggleBodyClass: function toggleBodyClass(addRemoveClass, className) {
       var el = document.body;
 
-      if (addRemoveClass === 'addClass') {
-        el.classList.add(className);
-      } else {
-        el.classList.remove(className);
+      if (this.isMobile) {
+        if (addRemoveClass === 'addClass') {
+          el.classList.add(className);
+        } else {
+          el.classList.remove(className);
+        }
       }
     },
     getDayStyles: function getDayStyles(date) {
