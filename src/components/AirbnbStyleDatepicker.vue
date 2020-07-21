@@ -639,6 +639,15 @@ export default {
     this.triggerElement.removeEventListener('click', this._handleWindowClickEvent)
   },
   methods: {
+    toggleBodyClass(addRemoveClass, className) {
+      const el = document.body;
+
+      if (addRemoveClass === 'addClass') {
+        el.classList.add(className);
+      } else {
+        el.classList.remove(className);
+      }
+    },
     getDayStyles(date) {
       const isSelected = this.isSelected(date)
       const isHovered = this.isHovered(date)
@@ -1173,6 +1182,7 @@ export default {
       this.$nextTick(() => {
         if (!this.inline) this.setFocusedDate(this.focusedDate)
       })
+      this.toggleBodyClass('addClass', 'datepicker-open');
     },
     closeDatepickerCancel() {
       if (this.showDatepicker) {
@@ -1189,6 +1199,7 @@ export default {
       this.showDatepicker = false
       this.showKeyboardShortcutsMenu = false
       this.triggerElement.classList.remove('datepicker-open')
+      this.toggleBodyClass('removeClass', 'datepicker-open');
       this.$emit('closed')
     },
     openKeyboardShortcutsMenu() {

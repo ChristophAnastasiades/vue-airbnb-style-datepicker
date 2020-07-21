@@ -4930,6 +4930,15 @@
       this.triggerElement.removeEventListener('click', this._handleWindowClickEvent);
     },
     methods: {
+      toggleBodyClass: function toggleBodyClass(addRemoveClass, className) {
+        var el = document.body;
+
+        if (addRemoveClass === 'addClass') {
+          el.classList.add(className);
+        } else {
+          el.classList.remove(className);
+        }
+      },
       getDayStyles: function getDayStyles(date) {
         var isSelected = this.isSelected(date);
         var isHovered = this.isHovered(date);
@@ -5474,6 +5483,7 @@
         this.$nextTick(function () {
           if (!this$1.inline) { this$1.setFocusedDate(this$1.focusedDate); }
         });
+        this.toggleBodyClass('addClass', 'datepicker-open');
       },
       closeDatepickerCancel: function closeDatepickerCancel() {
         if (this.showDatepicker) {
@@ -5490,6 +5500,7 @@
         this.showDatepicker = false;
         this.showKeyboardShortcutsMenu = false;
         this.triggerElement.classList.remove('datepicker-open');
+        this.toggleBodyClass('removeClass', 'datepicker-open');
         this.$emit('closed');
       },
       openKeyboardShortcutsMenu: function openKeyboardShortcutsMenu() {
