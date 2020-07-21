@@ -291,6 +291,9 @@
       width: 20px;
       height: 20px; }
 
+.asd__wrapper--full-screen {
+  overflow-y: auto; }
+
 .datepicker_additional_information {
   margin-top: 25px; }
 

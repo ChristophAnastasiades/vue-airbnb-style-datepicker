@@ -1590,6 +1590,9 @@ $transition-time: 0.3s;
     }
   }
 }
+.asd__wrapper--full-screen {
+  overflow-y: auto;
+}
 .datepicker_additional_information {
   margin-top: 25px;
 }
