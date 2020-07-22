@@ -290,6 +290,9 @@
     .flexible_range_select .flexible_range_select__info svg {
       width: 20px;
       height: 20px; }
+    .flexible_range_select .flexible_range_select__info > span {
+      margin-bottom: 10px;
+      display: block; }
 
 .asd__wrapper--full-screen {
   overflow-y: auto; }
@@ -304,4 +307,9 @@
   max-width: 200px; }
 
 select[name="flexibleSearchRange"] {
-  margin-bottom: 15px; }
+  margin-bottom: 20px;
+  width: 100%; }
+  @media (min-width: 992px) {
+    select[name="flexibleSearchRange"] {
+      margin-bottom: 15px;
+      width: auto; } }

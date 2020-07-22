@@ -1590,6 +1590,11 @@ $transition-time: 0.3s;
       width: 20px;
       height: 20px;
     }
+
+    > span {
+      margin-bottom: 10px;
+      display: block;
+    }
   }
 }
 .asd__wrapper--full-screen {
@@ -1605,6 +1610,12 @@ $transition-time: 0.3s;
   max-width: 200px;
 }
 select[name="flexibleSearchRange"] {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+
+  @media (min-width: 992px) {
+    margin-bottom: 15px;
+    width: auto;
+  }
 }
 </style>
