@@ -1584,7 +1584,7 @@ $transition-time: 0.3s;
 
   .flexible_range_select__info {
     float: right;
-    text-align: right;
+    text-align: left;
 
     svg {
       width: 20px;
