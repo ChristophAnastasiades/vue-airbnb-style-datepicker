@@ -204,7 +204,7 @@
             <div class="popper">Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.</div>
 
             <div slot="reference">
-              Möglichen Reisezeitraum wählen
+              1. Möglichen Reisezeitraum wählen
               <svg viewBox="0 0 75 75">
                 <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
               </svg>
@@ -220,7 +220,7 @@
             <div class="popper">Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.</div>
 
             <div slot="reference">
-              Gewünschte Reisedauer wählen
+              2. Gewünschte Reisedauer wählen
               <svg viewBox="0 0 75 75">
                 <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
               </svg>
