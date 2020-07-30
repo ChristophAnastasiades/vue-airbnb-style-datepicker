@@ -9,7 +9,7 @@
       v-click-outside="handleClickOutside"
     >
       <h2 v-if="flexibleSearch">Flexibler Reisezeitraum</h2>
-      <div class="flexible_range_instruction_wrapper">
+      <div v-if="flexibleSearch" class="flexible_range_instruction_wrapper">
         <div class="flexible_range_instruction">
           <popper
             trigger="hover"
