@@ -303,6 +303,9 @@
     width: 20px;
     height: 20px; }
 
+.flexible_range_instruction_wrapper {
+  text-align: left; }
+
 .asd__wrapper--full-screen {
   overflow-y: auto; }
 
