@@ -14,7 +14,7 @@
           <popper
             trigger="hover"
             :options="{
-              placement: 'top-end'
+              placement: 'right-start'
             }
             "
           >
