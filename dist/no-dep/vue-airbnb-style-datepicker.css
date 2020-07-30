@@ -294,6 +294,14 @@
       margin-bottom: 10px;
       display: block; }
 
+.flexible_range_instruction {
+  margin-bottom: 15px;
+  padding: 0 15px;
+  text-align: left; }
+  .flexible_range_instruction svg {
+    width: 20px;
+    height: 20px; }
+
 .asd__wrapper--full-screen {
   overflow-y: auto; }
 

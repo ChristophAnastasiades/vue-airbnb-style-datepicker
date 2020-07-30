@@ -9,6 +9,31 @@
       v-click-outside="handleClickOutside"
     >
       <h2 v-if="flexibleSearch">Flexibler Reisezeitraum</h2>
+      <div class="flexible_range_instruction">
+        <popper
+          trigger="hover"
+          :options="{
+            placement: 'top-end'
+          }
+          "
+        >
+          <div class="popper">
+            <ol>
+              <li><h6>Reisezeitraum wählen:</h6>Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.</li>
+            </ol>
+            <ol>
+              <li><h6>Reisedauer wählen:</h6>Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.</li>
+            </ol>
+          </div>
+
+          <div slot="reference">
+            Kurzanleitung
+            <svg viewBox="0 0 75 75">
+              <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
+            </svg>
+          </div>
+        </popper>
+      </div>
       <div class="asd__mobile-header asd__mobile-only" v-if="showFullscreen">
         <button
           class="asd__mobile-close"
@@ -1595,6 +1620,15 @@ $transition-time: 0.3s;
       margin-bottom: 10px;
       display: block;
     }
+  }
+}
+.flexible_range_instruction {
+  margin-bottom: 15px;
+  padding: 0 15px;
+  text-align: left;
+  svg {
+    width: 20px;
+    height: 20px;
   }
 }
 .asd__wrapper--full-screen {
