@@ -297,6 +297,7 @@
 .flexible_range_instruction {
   margin-bottom: 15px;
   padding: 0 15px;
+  display: inline-block;
   text-align: left; }
   .flexible_range_instruction svg {
     width: 20px;

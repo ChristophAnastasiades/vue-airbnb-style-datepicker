@@ -20,8 +20,6 @@
           <div class="popper">
             <ol>
               <li><h6>Reisezeitraum wählen:</h6>Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.</li>
-            </ol>
-            <ol>
               <li><h6>Reisedauer wählen:</h6>Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.</li>
             </ol>
           </div>
@@ -1625,6 +1623,7 @@ $transition-time: 0.3s;
 .flexible_range_instruction {
   margin-bottom: 15px;
   padding: 0 15px;
+  display: inline-block;
   text-align: left;
   svg {
     width: 20px;
