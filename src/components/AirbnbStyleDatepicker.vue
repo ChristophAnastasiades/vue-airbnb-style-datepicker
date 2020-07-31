@@ -218,40 +218,6 @@
             {{ option }} <template v-if="option === 1">Nacht</template><template v-else>Nächte</template><template v-if="option % 7 === 0"> ({{ option / 7 }} Woche<template v-if="option / 7 > 1">n</template>)</template>
           </option>
         </select>
-        <div class="flexible_range_select__info">
-          <popper
-            trigger="hover"
-            :options="{
-              placement: 'top-end'
-            }
-            "
-          >
-            <div class="popper">Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.</div>
-
-            <div slot="reference">
-              1. Möglichen Reisezeitraum wählen
-              <svg viewBox="0 0 75 75">
-                <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
-              </svg>
-            </div>
-          </popper>
-          <popper
-            trigger="hover"
-            :options="{
-              placement: 'top-end'
-            }
-            "
-          >
-            <div class="popper">Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.</div>
-
-            <div slot="reference">
-              2. Gewünschte Reisedauer wählen
-              <svg viewBox="0 0 75 75">
-                <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
-              </svg>
-            </div>
-          </popper>
-        </div>
         <div class="clearfix"></div>
       </div>
       <div class="datepicker_additional_information">Die meisten verfügbaren Unterkünfte finden Sie bei An- und Abreise an einem Samstag.</div>
