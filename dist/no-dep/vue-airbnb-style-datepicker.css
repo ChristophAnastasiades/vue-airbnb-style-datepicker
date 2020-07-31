@@ -274,7 +274,7 @@
 
 .flexible_range_select {
   padding: 0 15px;
-  margin: 25px 0;
+  margin: 25px 0 5px 0;
   text-align: left; }
   .flexible_range_select select {
     padding: 6px;
@@ -310,7 +310,7 @@
   overflow-y: auto; }
 
 .datepicker_additional_information {
-  margin-top: 25px; }
+  margin-top: 5px; }
 
 .clearfix {
   clear: both; }
