@@ -1558,7 +1558,7 @@ $transition-time: 0.3s;
 }
 .flexible_range_select {
   padding: 0 15px;
-  margin: 25px 0 5px 0;
+  margin: 25px 0 0 0;
   text-align: left;
 
   select {
@@ -1603,9 +1603,6 @@ $transition-time: 0.3s;
 }
 .asd__wrapper--full-screen {
   overflow-y: auto;
-}
-.datepicker_additional_information {
-  margin-top: 5px;
 }
 .clearfix {
   clear: both;
