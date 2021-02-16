@@ -315,13 +315,16 @@
 .v-tooltip {
   max-width: 200px; }
 
-select[name="flexibleSearchRange"] {
+select[name='flexibleSearchRange'] {
   margin-bottom: 20px;
   width: 100%; }
   @media (min-width: 992px) {
-    select[name="flexibleSearchRange"] {
+    select[name='flexibleSearchRange'] {
       margin-bottom: 15px;
       width: auto; } }
+
+.flexible_range_date_info {
+  display: flex; }
 
 
 .popper {
