@@ -53,7 +53,7 @@
     "vue-template-compiler": "^2.5.13"
   },
   "peerDependencies": {
-    "date-fns": "1.x",
+    "date-fns": "^1.29.0",
     "vue": "2.x"
   },
   "jest": {

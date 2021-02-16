@@ -8,27 +8,36 @@
       :style="showFullscreen ? undefined : wrapperStyles"
       v-click-outside="handleClickOutside"
     >
-      <h2 v-if="flexibleSearch">Flexibler Reisezeitraum</h2>
-      <div v-if="flexibleSearch" class="flexible_range_instruction_wrapper">
+      <h2 v-if="flexibleSearch">Reisezeitraum</h2>
+      <div v-if="true" class="flexible_range_instruction_wrapper">
         <div class="flexible_range_instruction">
           <popper
             trigger="hover"
             :options="{
-              placement: 'right-start'
-            }
-            "
+              placement: 'right-start',
+            }"
           >
             <div class="popper">
               <ol>
-                <li><h6>Reisezeitraum wählen:</h6>Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.</li>
-                <li><h6>Reisedauer wählen:</h6>Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.</li>
+                <li>
+                  <h6>Reisezeitraum wählen:</h6>
+                  Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.
+                </li>
+                <li>
+                  <h6>Reisedauer wählen:</h6>
+                  Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten
+                  Zeitraum nach freien Unterkünften.
+                </li>
               </ol>
             </div>
 
             <div slot="reference">
               Kurzanleitung
               <svg viewBox="0 0 75 75">
-                <path d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5" fill="#2470ab"></path>
+                <path
+                  d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5"
+                  fill="#2470ab"
+                ></path>
               </svg>
             </div>
           </popper>
@@ -84,7 +93,7 @@
             v-for="(month, monthIndex) in months"
             :key="month.firstDateOfMonth"
             class="asd__month"
-            :class="{'asd__month--hidden': monthIndex === 0 || monthIndex > showMonths}"
+            :class="{ 'asd__month--hidden': monthIndex === 0 || monthIndex > showMonths }"
             :style="monthWidthStyles"
           >
             <div class="asd__month-name">
@@ -101,7 +110,9 @@
                   :value="monthName"
                   :disabled="isMonthDisabled(month.year, idx)"
                   :key="`month-${monthIndex}-${monthName}`"
-                >{{ monthName }}</option>
+                >
+                  {{ monthName }}
+                </option>
               </select>
               <span v-else>{{ month.monthName }}</span>
 
@@ -140,18 +151,21 @@
                       isDateVisible(fullDate) && isSameDate(focusedDate, fullDate) ? 0 : -1
                     "
                     :aria-label="isDateVisible(fullDate) ? getAriaLabelForDate(fullDate) : false"
-                    :class="[{
-                      'asd__day--enabled': dayNumber !== 0,
-                      'asd__day--empty': dayNumber === 0,
-                      'asd__day--disabled': isDisabled(fullDate),
-                      'asd__day--selected':
-                        fullDate && (selectedDate1 === fullDate || selectedDate2 === fullDate),
-                      'asd__day--in-range': isInRange(fullDate),
-                      'asd__day--today': fullDate && isToday(fullDate),
-                      'asd__day--hovered': isHoveredInRange(fullDate),
-                      'asd__selected-date-one': fullDate && fullDate === selectedDate1,
-                      'asd__selected-date-two': fullDate && fullDate === selectedDate2,
-                    }, customizedDateClass(fullDate)]"
+                    :class="[
+                      {
+                        'asd__day--enabled': dayNumber !== 0,
+                        'asd__day--empty': dayNumber === 0,
+                        'asd__day--disabled': isDisabled(fullDate),
+                        'asd__day--selected':
+                          fullDate && (selectedDate1 === fullDate || selectedDate2 === fullDate),
+                        'asd__day--in-range': isInRange(fullDate),
+                        'asd__day--today': fullDate && isToday(fullDate),
+                        'asd__day--hovered': isHoveredInRange(fullDate),
+                        'asd__selected-date-one': fullDate && fullDate === selectedDate1,
+                        'asd__selected-date-two': fullDate && fullDate === selectedDate2,
+                      },
+                      customizedDateClass(fullDate),
+                    ]"
                     :style="getDayStyles(fullDate)"
                     @mouseover="
                       () => {
@@ -211,16 +225,33 @@
           </ul>
         </div>
       </div>
+      <div v-if="flexibleSearch" class="flexible_range_date_info">
+        <div>
+          <h5>Früheste Anreise</h5>
+          {{ earliestArrival }}
+        </div>
+        <div>
+          <h5>Späteste Anreise</h5>
+          {{ earliestDeparture }}
+        </div>
+      </div>
       <div v-if="flexibleSearch" class="flexible_range_select">
-        <h4>Wählen Sie Ihre gewünschte Reisedauer:</h4>
+        <h4>Gewünschte Reisedauer:</h4>
         <select name="flexibleSearchRange" v-model="selectedFlexibleSearchOption">
-          <option v-for="option in flexibleSearchOptions" :key="'flexibleSearchOptions' + option" :value="option">
-            {{ option }} <template v-if="option === 1">Nacht</template><template v-else>Nächte</template><template v-if="option % 7 === 0"> ({{ option / 7 }} Woche<template v-if="option / 7 > 1">n</template>)</template>
+          <option
+            v-for="option in flexibleSearchOptions"
+            :key="'flexibleSearchOptions' + option"
+            :value="option"
+          >
+            {{ option }} <template v-if="option === 1">Nacht</template><template v-else>Nächte</template><template v-if="option % 7 === 0">
+              ({{ option / 7 }} Woche<template v-if="option / 7 > 1">n</template>)</template>
           </option>
         </select>
         <div class="clearfix"></div>
       </div>
-      <div class="datepicker_additional_information">Die meisten verfügbaren Unterkünfte finden Sie bei An- und Abreise an einem Samstag.</div>
+      <div class="datepicker_additional_information">
+        Die meisten verfügbaren Unterkünfte finden Sie bei An- und Abreise an einem Samstag.
+      </div>
       <div class="asd__action-buttons" v-if="mode !== 'single' && showActionButtons">
         <button @click="closeDatepickerCancel" type="button">{{ texts.cancel }}</button>
         <button
@@ -228,7 +259,9 @@
           @click="apply"
           :style="{ color: colors.selected }"
           type="button"
-        >{{ texts.apply }}</button>
+        >
+          {{ texts.apply }}
+        </button>
       </div>
       <div v-if="showShortcutsMenuTrigger" class="asd__keyboard-shortcuts-trigger-wrapper">
         <button
@@ -246,6 +279,7 @@
 
 <script>
 import format from 'date-fns/format'
+import parse from 'date-fns/parse'
 import subMonths from 'date-fns/sub_months'
 import addMonths from 'date-fns/add_months'
 import getDaysInMonth from 'date-fns/get_days_in_month'
@@ -270,17 +304,17 @@ import differenceInDays from 'date-fns/difference_in_days'
 import { debounce, copyObject, findAncestor, randomString } from './../helpers'
 import vClickOutside from 'v-click-outside'
 import ResizeSelect from '../directives/ResizeSelect'
-import Popper from 'vue-popperjs';
-import 'vue-popperjs/dist/vue-popper.css';
+import Popper from 'vue-popperjs'
+import 'vue-popperjs/dist/vue-popper.css'
 
 export default {
   name: 'AirbnbStyleDatepicker',
   directives: {
     clickOutside: vClickOutside.directive,
-    resizeSelect: ResizeSelect
+    resizeSelect: ResizeSelect,
   },
   components: {
-    'popper': Popper
+    popper: Popper,
   },
   props: {
     triggerElementId: { type: String },
@@ -310,8 +344,8 @@ export default {
     },
     trigger: { type: Boolean, default: false },
     closeAfterSelect: { type: Boolean, default: false },
-    flexibleSearch: { type: Boolean, default: false },
-    selectedFlexibleSearchOptionProp: { type: Number, default: 1 }
+    flexibleSearch: { type: Boolean, default: true },
+    selectedFlexibleSearchOptionProp: { type: Number, default: 1 },
   },
   data() {
     return {
@@ -426,10 +460,24 @@ export default {
       isTablet: undefined,
       triggerElement: undefined,
       flexibleRangeInfo: null,
-      selectedFlexibleSearchOption: 1
+      selectedFlexibleSearchOption: 1,
     }
   },
   computed: {
+    earliestArrival() {
+      if (this.selectedDate1) {
+        const parsed = parse(this.selectedDate1, 'YYYY-MM-DD', new Date())
+        return format(parsed, 'DD.MM.YYYY')
+      }      
+      return null
+    },
+    earliestDeparture() {
+      if (this.selectedDate2) {
+        const parsed = parse(this.selectedDate2, 'YYYY-MM-DD', new Date())
+        return format(parsed, 'DD.MM.YYYY')
+      }      
+      return null
+    },
     flexibleSearchOptions() {
       let result = 7
       if (this.selectedDate1 && this.selectedDate2) {
@@ -535,11 +583,11 @@ export default {
       this.$emit('flexible-date-range-selected', newValue)
     },
     selectedDate1(newValue, oldValue) {
-      let newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
+      const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
       this.$emit('date-one-selected', newDate)
     },
     selectedDate2(newValue, oldValue) {
-      let newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
+      const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
       this.$emit('date-two-selected', newDate)
     },
     mode(newValue, oldValue) {
@@ -631,13 +679,13 @@ export default {
   },
   methods: {
     toggleBodyClass(addRemoveClass, className) {
-      const el = document.body;
+      const el = document.body
 
       if (this.isMobile) {
         if (addRemoveClass === 'addClass') {
-          el.classList.add(className);
+          el.classList.add(className)
         } else {
-          el.classList.remove(className);
+          el.classList.remove(className)
         }
       }
     },
@@ -649,7 +697,7 @@ export default {
       const isDisabled = this.isDisabled(date)
       const isHoveredInRange = this.isHoveredInRange(date)
 
-      let styles = {
+      const styles = {
         width: (this.width - 30) / 7 + 'px',
         background: isSelected
           ? this.colors.selected
@@ -859,7 +907,7 @@ export default {
       const currentYear = getYear(this.startingDate)
       const startYear = this.minDate ? getYear(this.minDate) : currentYear - this.yearsForSelect
       const endYear = this.endDate ? getYear(this.endDate) : currentYear + this.yearsForSelect
-      for (var year = startYear; year <= endYear; year++) {
+      for (let year = startYear; year <= endYear; year++) {
         this.years.push(year.toString())
       }
     },
@@ -949,7 +997,7 @@ export default {
       if (this.sundayFirst) {
         firstDayInWeek++
       }
-      let weeks = []
+      const weeks = []
       let week = []
 
       // add empty days to get first day in correct position
@@ -957,9 +1005,9 @@ export default {
         week.push(weekDayNotInMonth)
       }
       for (let d = 0; d < daysInMonth; d++) {
-        let isLastDayInMonth = d >= daysInMonth - 1
-        let dayNumber = d + 1
-        let dayNumberFull = dayNumber < 10 ? '0' + dayNumber : dayNumber
+        const isLastDayInMonth = d >= daysInMonth - 1
+        const dayNumber = d + 1
+        const dayNumberFull = dayNumber < 10 ? '0' + dayNumber : dayNumber
         week.push({
           dayNumber,
           dayNumberFull: dayNumberFull,
@@ -1022,7 +1070,7 @@ export default {
       const dateElement = this.$refs[`date-${formattedDate}`]
       // handle .focus() on ie11 by adding a short timeout
       if (dateElement && dateElement.length) {
-        setTimeout(function() {
+        setTimeout(function () {
           dateElement[0].focus()
         }, 10)
       }
@@ -1111,9 +1159,9 @@ export default {
       }
     },
     customizedDateClass(date) {
-      var customizedClasses = ''
+      let customizedClasses = ''
       if (this.customizedDates.length > 0) {
-        for (var i = 0; i < this.customizedDates.length; i++) {
+        for (let i = 0; i < this.customizedDates.length; i++) {
           if (this.customizedDates[i].dates.indexOf(date) > -1)
             customizedClasses += ` asd__day--${this.customizedDates[i].cssClass}`
         }
@@ -1175,7 +1223,7 @@ export default {
       this.$nextTick(() => {
         if (!this.inline) this.setFocusedDate(this.focusedDate)
       })
-      this.toggleBodyClass('addClass', 'datepicker-open');
+      this.toggleBodyClass('addClass', 'datepicker-open')
     },
     closeDatepickerCancel() {
       if (this.showDatepicker) {
@@ -1192,7 +1240,7 @@ export default {
       this.showDatepicker = false
       this.showKeyboardShortcutsMenu = false
       this.triggerElement.classList.remove('datepicker-open')
-      this.toggleBodyClass('removeClass', 'datepicker-open');
+      this.toggleBodyClass('removeClass', 'datepicker-open')
       this.$emit('closed')
     },
     openKeyboardShortcutsMenu() {
@@ -1227,7 +1275,7 @@ export default {
         ? 2
         : this.monthsToShow
 
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         const datepickerWrapper = document.getElementById(this.wrapperId)
         if (!this.triggerElement || !datepickerWrapper) {
           return
@@ -1610,7 +1658,7 @@ $transition-time: 0.3s;
 .v-tooltip {
   max-width: 200px;
 }
-select[name="flexibleSearchRange"] {
+select[name='flexibleSearchRange'] {
   margin-bottom: 20px;
   width: 100%;
 
@@ -1618,5 +1666,8 @@ select[name="flexibleSearchRange"] {
     margin-bottom: 15px;
     width: auto;
   }
+}
+.flexible_range_date_info {
+  display: flex;
 }
 </style>
