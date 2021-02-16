@@ -3391,7 +3391,7 @@
       },
       trigger: { type: Boolean, default: false },
       closeAfterSelect: { type: Boolean, default: false },
-      flexibleSearch: { type: Boolean, default: true },
+      flexibleSearch: { type: Boolean, default: false },
       selectedFlexibleSearchOptionProp: { type: Number, default: 1 },
     },
     data: function data() {

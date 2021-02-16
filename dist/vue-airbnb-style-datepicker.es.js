@@ -232,7 +232,7 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
     },
     trigger: { type: Boolean, default: false },
     closeAfterSelect: { type: Boolean, default: false },
-    flexibleSearch: { type: Boolean, default: true },
+    flexibleSearch: { type: Boolean, default: false },
     selectedFlexibleSearchOptionProp: { type: Number, default: 1 },
   },
   data: function data() {
