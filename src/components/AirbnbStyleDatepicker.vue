@@ -20,13 +20,10 @@
             <div class="popper">
               <ol>
                 <li>
-                  <h6>Reisezeitraum wählen:</h6>
-                  Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.
+                  <h6>Reisezeitraum wählen:</h6>Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.
                 </li>
                 <li>
-                  <h6>Reisedauer wählen:</h6>
-                  Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten
-                  Zeitraum nach freien Unterkünften.
+                  <h6>Reisedauer wählen:</h6>Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.
                 </li>
               </ol>
             </div>
