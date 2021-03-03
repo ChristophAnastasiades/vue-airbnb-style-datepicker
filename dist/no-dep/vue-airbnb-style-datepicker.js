@@ -3524,7 +3524,7 @@
         return null
       },
       flexibleSearchOptions: function flexibleSearchOptions() {
-        var result;
+        var result = 7;
         if (this.selectedDate1 && this.selectedDate2) {
           result = difference_in_days(
             new Date(format(this.selectedDate2, this.dateFormat)),
@@ -3626,6 +3626,7 @@
       },
       selectedFlexibleSearchOption: function selectedFlexibleSearchOption(newValue, oldValue) {
         if (this.showDatepicker) {
+          console.log('JASDASDASDASD');
           this.$emit('flexible-date-range-selected', newValue);
         }
       },

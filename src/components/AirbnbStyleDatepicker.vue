@@ -476,7 +476,7 @@ export default {
       return null
     },
     flexibleSearchOptions() {
-      let result
+      let result = 7
       if (this.selectedDate1 && this.selectedDate2) {
         result = differenceInDays(
           new Date(format(this.selectedDate2, this.dateFormat)),
@@ -578,6 +578,7 @@ export default {
     },
     selectedFlexibleSearchOption(newValue, oldValue) {
       if (this.showDatepicker) {
+        console.log('JASDASDASDASD')
         this.$emit('flexible-date-range-selected', newValue)
       }
     },
