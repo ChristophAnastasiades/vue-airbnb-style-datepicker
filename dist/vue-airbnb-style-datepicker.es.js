@@ -477,7 +477,9 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
     selectedDate2: function selectedDate2(newValue) {
       var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
       this.$emit('date-two-selected', newDate);
-      this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
+      this.$nextTick(function() {
+        this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
+      });
     },
     mode: function mode() {
       this.setStartDates();

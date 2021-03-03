@@ -588,7 +588,9 @@ export default {
     selectedDate2(newValue) {
       const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
       this.$emit('date-two-selected', newDate)
-      this.selectedFlexibleSearchOption = this.flexibleSearchOptions
+      this.$nextTick(function() {
+        this.selectedFlexibleSearchOption = this.flexibleSearchOptions
+      })
     },
     mode() {
       this.setStartDates()
