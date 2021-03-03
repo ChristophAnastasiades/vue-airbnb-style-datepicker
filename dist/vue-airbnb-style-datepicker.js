@@ -4873,7 +4873,9 @@
         this.selectedFlexibleSearchOption = newValue;
       },
       selectedFlexibleSearchOption: function selectedFlexibleSearchOption(newValue, oldValue) {
-        this.$emit('flexible-date-range-selected', newValue);
+        if (this.showDatepicker) {
+          this.$emit('flexible-date-range-selected', newValue);
+        }
       },
       selectedDate1: function selectedDate1(newValue) {
         var newDate = !newValue || newValue === '' ? '' : format_1(newValue, this.dateFormat);

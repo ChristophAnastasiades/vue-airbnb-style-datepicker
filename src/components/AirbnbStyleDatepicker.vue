@@ -577,7 +577,9 @@ export default {
       this.selectedFlexibleSearchOption = newValue
     },
     selectedFlexibleSearchOption(newValue, oldValue) {
-      this.$emit('flexible-date-range-selected', newValue)
+      if (this.showDatepicker) {
+        this.$emit('flexible-date-range-selected', newValue)
+      }
     },
     selectedDate1(newValue) {
       const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
