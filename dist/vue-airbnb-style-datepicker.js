@@ -4882,7 +4882,7 @@
       selectedDate2: function selectedDate2(newValue) {
         var newDate = !newValue || newValue === '' ? '' : format_1(newValue, this.dateFormat);
         this.$emit('date-two-selected', newDate);
-        this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption);
+        this.selectedFlexibleSearchOption = this.flexibleSearchOptions[this.flexibleSearchOptions.length - 1];
       },
       mode: function mode() {
         this.setStartDates();
