@@ -575,11 +575,7 @@ export default {
   watch: {
     selectedFlexibleSearchOptionProp(newValue) {
       this.selectedFlexibleSearchOption = newValue
-    },
-    selectedFlexibleSearchOption(newValue, oldValue) {
-      if (this.showDatepicker) {
-        this.$emit('flexible-date-range-selected', newValue)
-      }
+      this.sendFlexibleRange()
     },
     selectedDate1(newValue) {
       const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
@@ -589,8 +585,8 @@ export default {
       const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
       this.$emit('date-two-selected', newDate)
       this.$nextTick(function() {
-        console.log('test' + this.flexibleSearchOptions)
         this.selectedFlexibleSearchOption = this.flexibleSearchOptions
+        this.sendFlexibleRange()
       })
     },
     mode() {
@@ -667,9 +663,7 @@ export default {
 
     this.selectedFlexibleSearchOption = this.selectedFlexibleSearchOptionProp
 
-    if (this.flexibleSearch) {
-      this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption)
-    }
+    this.sendFlexibleRange()
   },
   destroyed() {
     window.removeEventListener('resize', this._handleWindowResizeEvent)
@@ -681,6 +675,11 @@ export default {
     this.triggerElement.removeEventListener('click', this._handleWindowClickEvent)
   },
   methods: {
+    sendFlexibleRange() {
+      if (this.showDatepicker) {
+        this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption)
+      }
+    },
     toggleBodyClass(addRemoveClass, className) {
       const el = document.body
 

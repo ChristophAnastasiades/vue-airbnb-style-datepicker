@@ -3623,11 +3623,7 @@
     watch: {
       selectedFlexibleSearchOptionProp: function selectedFlexibleSearchOptionProp(newValue) {
         this.selectedFlexibleSearchOption = newValue;
-      },
-      selectedFlexibleSearchOption: function selectedFlexibleSearchOption(newValue, oldValue) {
-        if (this.showDatepicker) {
-          this.$emit('flexible-date-range-selected', newValue);
-        }
+        this.sendFlexibleRange();
       },
       selectedDate1: function selectedDate1(newValue) {
         var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
@@ -3637,8 +3633,8 @@
         var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
         this.$emit('date-two-selected', newDate);
         this.$nextTick(function() {
-          console.log('test' + this.flexibleSearchOptions);
           this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
+          this.sendFlexibleRange();
         });
       },
       mode: function mode() {
@@ -3719,9 +3715,7 @@
 
       this.selectedFlexibleSearchOption = this.selectedFlexibleSearchOptionProp;
 
-      if (this.flexibleSearch) {
-        this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption);
-      }
+      this.sendFlexibleRange();
     },
     destroyed: function destroyed() {
       window.removeEventListener('resize', this._handleWindowResizeEvent);
@@ -3733,6 +3727,11 @@
       this.triggerElement.removeEventListener('click', this._handleWindowClickEvent);
     },
     methods: {
+      sendFlexibleRange: function sendFlexibleRange() {
+        if (this.showDatepicker) {
+          this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption);
+        }
+      },
       toggleBodyClass: function toggleBodyClass(addRemoveClass, className) {
         var el = document.body;
 
