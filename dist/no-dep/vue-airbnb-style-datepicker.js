@@ -3637,7 +3637,7 @@
         var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
         this.$emit('date-two-selected', newDate);
         this.$nextTick(function() {
-          console.log('Isin');
+          console.log('test' + this.flexibleSearchOptions);
           this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
         });
       },
