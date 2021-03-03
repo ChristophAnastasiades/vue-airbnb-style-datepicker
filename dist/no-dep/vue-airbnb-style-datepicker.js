@@ -3625,8 +3625,9 @@
         this.selectedFlexibleSearchOption = newValue;
       },
       selectedFlexibleSearchOption: function selectedFlexibleSearchOption(newValue, oldValue) {
-        console.log('JASDASDASDASD');
-        this.$emit('flexible-date-range-selected', newValue);
+        if (this.showDatepicker) {
+          this.$emit('flexible-date-range-selected', newValue);
+        }
       },
       selectedDate1: function selectedDate1(newValue) {
         var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
@@ -3636,6 +3637,7 @@
         var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
         this.$emit('date-two-selected', newDate);
         this.$nextTick(function() {
+          console.log('Isin');
           this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
         });
       },

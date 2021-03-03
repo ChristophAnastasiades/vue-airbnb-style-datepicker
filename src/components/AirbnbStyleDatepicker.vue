@@ -577,8 +577,9 @@ export default {
       this.selectedFlexibleSearchOption = newValue
     },
     selectedFlexibleSearchOption(newValue, oldValue) {
-      console.log('JASDASDASDASD')
-      this.$emit('flexible-date-range-selected', newValue)
+      if (this.showDatepicker) {
+        this.$emit('flexible-date-range-selected', newValue)
+      }
     },
     selectedDate1(newValue) {
       const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
@@ -588,6 +589,7 @@ export default {
       const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
       this.$emit('date-two-selected', newDate)
       this.$nextTick(function() {
+        console.log('Isin')
         this.selectedFlexibleSearchOption = this.flexibleSearchOptions
       })
     },
