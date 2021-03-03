@@ -476,7 +476,7 @@ export default {
       return null
     },
     flexibleSearchOptions() {
-      let result = 7
+      let result
       if (this.selectedDate1 && this.selectedDate2) {
         result = differenceInDays(
           new Date(format(this.selectedDate2, this.dateFormat)),

@@ -3524,7 +3524,7 @@
         return null
       },
       flexibleSearchOptions: function flexibleSearchOptions() {
-        var result = 7;
+        var result;
         if (this.selectedDate1 && this.selectedDate2) {
           result = difference_in_days(
             new Date(format(this.selectedDate2, this.dateFormat)),

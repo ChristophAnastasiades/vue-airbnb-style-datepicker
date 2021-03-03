@@ -365,7 +365,7 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
       return null
     },
     flexibleSearchOptions: function flexibleSearchOptions() {
-      var result = 7;
+      var result;
       if (this.selectedDate1 && this.selectedDate2) {
         result = differenceInDays(
           new Date(format(this.selectedDate2, this.dateFormat)),
