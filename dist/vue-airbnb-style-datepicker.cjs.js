@@ -472,15 +472,16 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
     selectedFlexibleSearchOption: function selectedFlexibleSearchOption(newValue, oldValue) {
       this.$emit('flexible-date-range-selected', newValue);
     },
-    selectedDate1: function selectedDate1(newValue, oldValue) {
+    selectedDate1: function selectedDate1(newValue) {
       var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
       this.$emit('date-one-selected', newDate);
     },
-    selectedDate2: function selectedDate2(newValue, oldValue) {
+    selectedDate2: function selectedDate2(newValue) {
       var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
       this.$emit('date-two-selected', newDate);
+      this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption);
     },
-    mode: function mode(newValue, oldValue) {
+    mode: function mode() {
       this.setStartDates();
     },
     minDate: function minDate() {

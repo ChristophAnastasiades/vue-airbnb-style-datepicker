@@ -579,15 +579,16 @@ export default {
     selectedFlexibleSearchOption(newValue, oldValue) {
       this.$emit('flexible-date-range-selected', newValue)
     },
-    selectedDate1(newValue, oldValue) {
+    selectedDate1(newValue) {
       const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
       this.$emit('date-one-selected', newDate)
     },
-    selectedDate2(newValue, oldValue) {
+    selectedDate2(newValue) {
       const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
       this.$emit('date-two-selected', newDate)
+      this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption)
     },
-    mode(newValue, oldValue) {
+    mode() {
       this.setStartDates()
     },
     minDate() {
