@@ -1,274 +1,276 @@
 <template>
   <transition name="asd__fade">
-    <div
-      :id="wrapperId"
-      class="asd__wrapper"
-      v-show="showDatepicker"
-      :class="wrapperClasses"
-      :style="showFullscreen ? undefined : wrapperStyles"
-      v-click-outside="handleClickOutside"
-    >
-      <h2 v-if="flexibleSearch">Reisezeitraum</h2>
-      <div v-if="true" class="flexible_range_instruction_wrapper">
-        <div class="flexible_range_instruction">
-          <popper
-            trigger="hover"
-            :options="{
-              placement: 'right-start',
-            }"
-          >
-            <div class="popper">
-              <ol>
-                <li>
-                  <h6>Reisezeitraum wählen:</h6>Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.
-                </li>
-                <li>
-                  <h6>Reisedauer wählen:</h6>Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.
-                </li>
-              </ol>
-            </div>
+    <div class="os24-datepicker-wrapper">
+      <div
+        :id="wrapperId"
+        class="asd__wrapper"
+        v-show="showDatepicker"
+        :class="wrapperClasses"
+        :style="showFullscreen ? undefined : wrapperStyles"
+        v-click-outside="handleClickOutside"
+      >
+        <h2 v-if="flexibleSearch">Reisezeitraum</h2>
+        <div v-if="true" class="flexible_range_instruction_wrapper">
+          <div class="flexible_range_instruction">
+            <popper
+              trigger="hover"
+              :options="{
+                placement: 'right-start',
+              }"
+            >
+              <div class="popper">
+                <ol>
+                  <li>
+                    <h6>Reisezeitraum wählen:</h6>Wählen Sie den maximal möglichen Zeitraum aus, in dem eine Reise stattfinden kann.
+                  </li>
+                  <li>
+                    <h6>Reisedauer wählen:</h6>Sie bestimmen die gewünschte Reisedauer und wir durchsuchen den oben genannten Zeitraum nach freien Unterkünften.
+                  </li>
+                </ol>
+              </div>
 
-            <div slot="reference">
-              Kurzanleitung
-              <svg viewBox="0 0 75 75">
-                <path
-                  d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5"
-                  fill="#2470ab"
-                ></path>
-              </svg>
-            </div>
-          </popper>
-        </div>
-      </div>
-      <div class="asd__mobile-header asd__mobile-only" v-if="showFullscreen">
-        <button
-          class="asd__mobile-close"
-          type="button"
-          @click="closeDatepicker"
-          :aria-label="ariaLabels.closeDatepicker"
-        >
-          <slot v-if="$slots['close-icon']" name="close-icon"></slot>
-          <div v-else class="asd__mobile-close-icon" aria-hidden="true">X</div>
-        </button>
-        <h3>{{ mobileHeader || mobileHeaderFallback }}</h3>
-      </div>
-      <div class="asd__datepicker-header">
-        <div class="asd__change-month-button asd__change-month-button--previous">
-          <button @click="previousMonth" type="button" :aria-label="ariaLabels.previousMonth">
-            <slot v-if="$slots['previous-month-icon']" name="previous-month-icon"></slot>
-            <svg v-else viewBox="0 0 1000 1000">
-              <path
-                d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z"
-              ></path>
-            </svg>
-          </button>
-        </div>
-        <div class="asd__change-month-button asd__change-month-button--next">
-          <button @click="nextMonth" type="button" :aria-label="ariaLabels.nextMonth">
-            <slot v-if="$slots['next-month-icon']" name="next-month-icon"></slot>
-            <svg v-else viewBox="0 0 1000 1000">
-              <path
-                d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"
-              ></path>
-            </svg>
-          </button>
-        </div>
-
-        <div
-          class="asd__days-legend"
-          v-for="(month, index) in showMonths"
-          :key="month"
-          :style="[monthWidthStyles, { left: width * index + 'px' }]"
-        >
-          <div class="asd__day-title" v-for="(day, index) in daysShort" :key="index">{{ day }}</div>
-        </div>
-      </div>
-
-      <div class="asd__inner-wrapper" :style="innerStyles">
-        <transition-group name="asd__list-complete" tag="div">
-          <div
-            v-for="(month, monthIndex) in months"
-            :key="month.firstDateOfMonth"
-            class="asd__month"
-            :class="{ 'asd__month--hidden': monthIndex === 0 || monthIndex > showMonths }"
-            :style="monthWidthStyles"
-          >
-            <div class="asd__month-name">
-              <select
-                v-if="showMonthYearSelect"
-                v-model="month.monthName"
-                class="asd__month-year-select"
-                :tabindex="monthIndex === 0 || monthIndex > showMonths ? -1 : 0"
-                @change="updateMonth(monthIndex, month.year, $event)"
-                v-resize-select
-              >
-                <option
-                  v-for="(monthName, idx) in monthNames"
-                  :value="monthName"
-                  :disabled="isMonthDisabled(month.year, idx)"
-                  :key="`month-${monthIndex}-${monthName}`"
-                >
-                  {{ monthName }}
-                </option>
-              </select>
-              <span v-else>{{ month.monthName }}</span>
-
-              <select
-                v-if="showMonthYearSelect"
-                class="asd__month-year-select"
-                :tabindex="monthIndex === 0 || monthIndex > showMonths ? -1 : 0"
-                v-model="month.year"
-                @change="updateYear(monthIndex, month.monthNumber - 1, $event)"
-              >
-                <option
-                  v-if="years.indexOf(month.year) === -1"
-                  :value="month.year"
-                  :key="`month-${monthIndex}-${year}`"
-                  :disabled="true"
-                >
-                  {{ month.year }}
-                </option>
-                <option v-for="year in years" :value="year" :key="`month-${monthIndex}-${year}`">
-                  {{ year }}
-                </option>
-              </select>
-              <span v-else>{{ month.year }}</span>
-            </div>
-
-            <table class="asd__month-table" role="presentation">
-              <tbody>
-                <tr class="asd__week" v-for="(week, index) in month.weeks" :key="index">
-                  <td
-                    class="asd__day"
-                    v-for="({ fullDate, dayNumber }, index) in week"
-                    :key="index + '_' + dayNumber"
-                    :data-date="fullDate"
-                    :ref="`date-${fullDate}`"
-                    :tabindex="
-                      isDateVisible(fullDate) && isSameDate(focusedDate, fullDate) ? 0 : -1
-                    "
-                    :aria-label="isDateVisible(fullDate) ? getAriaLabelForDate(fullDate) : false"
-                    :class="[
-                      {
-                        'asd__day--enabled': dayNumber !== 0,
-                        'asd__day--empty': dayNumber === 0,
-                        'asd__day--disabled': isDisabled(fullDate),
-                        'asd__day--selected':
-                          fullDate && (selectedDate1 === fullDate || selectedDate2 === fullDate),
-                        'asd__day--in-range': isInRange(fullDate),
-                        'asd__day--today': fullDate && isToday(fullDate),
-                        'asd__day--hovered': isHoveredInRange(fullDate),
-                        'asd__selected-date-one': fullDate && fullDate === selectedDate1,
-                        'asd__selected-date-two': fullDate && fullDate === selectedDate2,
-                      },
-                      customizedDateClass(fullDate),
-                    ]"
-                    :style="getDayStyles(fullDate)"
-                    @mouseover="
-                      () => {
-                        handleMouseHoverDate(fullDate)
-                      }
-                    "
-                    @mouseout="setHoverState(false)"
-                  >
-                    <button
-                      class="asd__day-button"
-                      type="button"
-                      v-if="dayNumber"
-                      tabindex="-1"
-                      :date="fullDate"
-                      :disabled="isDisabled(fullDate)"
-                      @click="
-                        () => {
-                          selectDate(fullDate)
-                        }
-                      "
-                    >
-                      {{ dayNumber }}
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              <div slot="reference">
+                Kurzanleitung
+                <svg viewBox="0 0 75 75">
+                  <path
+                    d="m32 2c-16.568 0-30 13.432-30 30s13.432 30 30 30 30-13.432 30-30-13.432-30-30-30m5 49.75h-10v-24h10v24m-5-29.5c-2.761 0-5-2.238-5-5s2.239-5 5-5c2.762 0 5 2.238 5 5s-2.238 5-5 5"
+                    fill="#2470ab"
+                  ></path>
+                </svg>
+              </div>
+            </popper>
           </div>
-        </transition-group>
-        <div
-          v-if="showShortcutsMenuTrigger"
-          :class="{
-            'asd__keyboard-shortcuts-menu': true,
-            'asd__keyboard-shortcuts-show': showKeyboardShortcutsMenu,
-          }"
-          :style="keyboardShortcutsMenuStyles"
-        >
-          <div class="asd__keyboard-shortcuts-title">{{ texts.keyboardShortcuts }}</div>
+        </div>
+        <div class="asd__mobile-header asd__mobile-only" v-if="showFullscreen">
           <button
-            class="asd__keyboard-shortcuts-close"
-            ref="keyboard-shortcus-menu-close"
-            tabindex="0"
-            @click="closeKeyboardShortcutsMenu"
-            :aria-label="ariaLabels.closeKeyboardShortcutsMenu"
+            class="asd__mobile-close"
+            type="button"
+            @click="closeDatepicker"
+            :aria-label="ariaLabels.closeDatepicker"
           >
-            <slot v-if="$slots['close-shortcuts-icon']" name="close-shortcuts-icon"></slot>
+            <slot v-if="$slots['close-icon']" name="close-icon"></slot>
             <div v-else class="asd__mobile-close-icon" aria-hidden="true">X</div>
           </button>
-          <ul class="asd__keyboard-shortcuts-list">
-            <li v-for="(shortcut, i) in keyboardShortcuts" :key="i">
-              <span
-                class="asd__keyboard-shortcuts-symbol"
-                :aria-label="shortcut.symbolDescription"
-              >{{ shortcut.symbol }}</span>
-              {{ shortcut.label }}
-            </li>
-          </ul>
+          <h3>{{ mobileHeader || mobileHeaderFallback }}</h3>
         </div>
-      </div>
-      <div v-if="flexibleSearch" class="flexible_range_date_info">
-        <div>
-          <h5>Früheste Anreise</h5>
-          {{ earliestArrival }}
-        </div>
-        <div>
-          <h5>Späteste Anreise</h5>
-          {{ earliestDeparture }}
-        </div>
-      </div>
-      <div v-if="flexibleSearch" class="flexible_range_select">
-        <h4>Gewünschte Reisedauer:</h4>
-        <select name="flexibleSearchRange" v-model="selectedFlexibleSearchOption">
-          <option
-            v-for="option in flexibleSearchOptions"
-            :key="'flexibleSearchOptions' + option"
-            :value="option"
+        <div class="asd__datepicker-header">
+          <div class="asd__change-month-button asd__change-month-button--previous">
+            <button @click="previousMonth" type="button" :aria-label="ariaLabels.previousMonth">
+              <slot v-if="$slots['previous-month-icon']" name="previous-month-icon"></slot>
+              <svg v-else viewBox="0 0 1000 1000">
+                <path
+                  d="M336.2 274.5l-210.1 210h805.4c13 0 23 10 23 23s-10 23-23 23H126.1l210.1 210.1c11 11 11 21 0 32-5 5-10 7-16 7s-11-2-16-7l-249.1-249c-11-11-11-21 0-32l249.1-249.1c21-21.1 53 10.9 32 32z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div class="asd__change-month-button asd__change-month-button--next">
+            <button @click="nextMonth" type="button" :aria-label="ariaLabels.nextMonth">
+              <slot v-if="$slots['next-month-icon']" name="next-month-icon"></slot>
+              <svg v-else viewBox="0 0 1000 1000">
+                <path
+                  d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <div
+            class="asd__days-legend"
+            v-for="(month, index) in showMonths"
+            :key="month"
+            :style="[monthWidthStyles, { left: width * index + 'px' }]"
           >
-            {{ option }} <template v-if="option === 1">Nacht</template><template v-else>Nächte</template><template v-if="option % 7 === 0">
-              ({{ option / 7 }} Woche<template v-if="option / 7 > 1">n</template>)</template>
-          </option>
-        </select>
-        <div class="clearfix"></div>
-      </div>
-      <div class="datepicker_additional_information">
-        Die meisten verfügbaren Unterkünfte finden Sie bei An- und Abreise an einem Samstag.
-      </div>
-      <div class="asd__action-buttons" v-if="mode !== 'single' && showActionButtons">
-        <button @click="closeDatepickerCancel" type="button">{{ texts.cancel }}</button>
-        <button
-          ref="apply-button"
-          @click="apply"
-          :style="{ color: colors.selected }"
-          type="button"
-        >
-          {{ texts.apply }}
-        </button>
-      </div>
-      <div v-if="showShortcutsMenuTrigger" class="asd__keyboard-shortcuts-trigger-wrapper">
-        <button
-          class="asd__keyboard-shortcuts-trigger"
-          :aria-label="ariaLabels.openKeyboardShortcutsMenu"
-          tabindex="0"
-          @click="openKeyboardShortcutsMenu"
-        >
-          <span>?</span>
-        </button>
+            <div class="asd__day-title" v-for="(day, index) in daysShort" :key="index">{{ day }}</div>
+          </div>
+        </div>
+
+        <div class="asd__inner-wrapper" :style="innerStyles">
+          <transition-group name="asd__list-complete" tag="div">
+            <div
+              v-for="(month, monthIndex) in months"
+              :key="month.firstDateOfMonth"
+              class="asd__month"
+              :class="{ 'asd__month--hidden': monthIndex === 0 || monthIndex > showMonths }"
+              :style="monthWidthStyles"
+            >
+              <div class="asd__month-name">
+                <select
+                  v-if="showMonthYearSelect"
+                  v-model="month.monthName"
+                  class="asd__month-year-select"
+                  :tabindex="monthIndex === 0 || monthIndex > showMonths ? -1 : 0"
+                  @change="updateMonth(monthIndex, month.year, $event)"
+                  v-resize-select
+                >
+                  <option
+                    v-for="(monthName, idx) in monthNames"
+                    :value="monthName"
+                    :disabled="isMonthDisabled(month.year, idx)"
+                    :key="`month-${monthIndex}-${monthName}`"
+                  >
+                    {{ monthName }}
+                  </option>
+                </select>
+                <span v-else>{{ month.monthName }}</span>
+
+                <select
+                  v-if="showMonthYearSelect"
+                  class="asd__month-year-select"
+                  :tabindex="monthIndex === 0 || monthIndex > showMonths ? -1 : 0"
+                  v-model="month.year"
+                  @change="updateYear(monthIndex, month.monthNumber - 1, $event)"
+                >
+                  <option
+                    v-if="years.indexOf(month.year) === -1"
+                    :value="month.year"
+                    :key="`month-${monthIndex}-${year}`"
+                    :disabled="true"
+                  >
+                    {{ month.year }}
+                  </option>
+                  <option v-for="year in years" :value="year" :key="`month-${monthIndex}-${year}`">
+                    {{ year }}
+                  </option>
+                </select>
+                <span v-else>{{ month.year }}</span>
+              </div>
+
+              <table class="asd__month-table" role="presentation">
+                <tbody>
+                  <tr class="asd__week" v-for="(week, index) in month.weeks" :key="index">
+                    <td
+                      class="asd__day"
+                      v-for="({ fullDate, dayNumber }, index) in week"
+                      :key="index + '_' + dayNumber"
+                      :data-date="fullDate"
+                      :ref="`date-${fullDate}`"
+                      :tabindex="
+                        isDateVisible(fullDate) && isSameDate(focusedDate, fullDate) ? 0 : -1
+                      "
+                      :aria-label="isDateVisible(fullDate) ? getAriaLabelForDate(fullDate) : false"
+                      :class="[
+                        {
+                          'asd__day--enabled': dayNumber !== 0,
+                          'asd__day--empty': dayNumber === 0,
+                          'asd__day--disabled': isDisabled(fullDate),
+                          'asd__day--selected':
+                            fullDate && (selectedDate1 === fullDate || selectedDate2 === fullDate),
+                          'asd__day--in-range': isInRange(fullDate),
+                          'asd__day--today': fullDate && isToday(fullDate),
+                          'asd__day--hovered': isHoveredInRange(fullDate),
+                          'asd__selected-date-one': fullDate && fullDate === selectedDate1,
+                          'asd__selected-date-two': fullDate && fullDate === selectedDate2,
+                        },
+                        customizedDateClass(fullDate),
+                      ]"
+                      :style="getDayStyles(fullDate)"
+                      @mouseover="
+                        () => {
+                          handleMouseHoverDate(fullDate)
+                        }
+                      "
+                      @mouseout="setHoverState(false)"
+                    >
+                      <button
+                        class="asd__day-button"
+                        type="button"
+                        v-if="dayNumber"
+                        tabindex="-1"
+                        :date="fullDate"
+                        :disabled="isDisabled(fullDate)"
+                        @click="
+                          () => {
+                            selectDate(fullDate)
+                          }
+                        "
+                      >
+                        {{ dayNumber }}
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </transition-group>
+          <div
+            v-if="showShortcutsMenuTrigger"
+            :class="{
+              'asd__keyboard-shortcuts-menu': true,
+              'asd__keyboard-shortcuts-show': showKeyboardShortcutsMenu,
+            }"
+            :style="keyboardShortcutsMenuStyles"
+          >
+            <div class="asd__keyboard-shortcuts-title">{{ texts.keyboardShortcuts }}</div>
+            <button
+              class="asd__keyboard-shortcuts-close"
+              ref="keyboard-shortcus-menu-close"
+              tabindex="0"
+              @click="closeKeyboardShortcutsMenu"
+              :aria-label="ariaLabels.closeKeyboardShortcutsMenu"
+            >
+              <slot v-if="$slots['close-shortcuts-icon']" name="close-shortcuts-icon"></slot>
+              <div v-else class="asd__mobile-close-icon" aria-hidden="true">X</div>
+            </button>
+            <ul class="asd__keyboard-shortcuts-list">
+              <li v-for="(shortcut, i) in keyboardShortcuts" :key="i">
+                <span
+                  class="asd__keyboard-shortcuts-symbol"
+                  :aria-label="shortcut.symbolDescription"
+                >{{ shortcut.symbol }}</span>
+                {{ shortcut.label }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div v-if="flexibleSearch" class="flexible_range_date_info">
+          <div>
+            <h5>Früheste Anreise</h5>
+            {{ earliestArrival }}
+          </div>
+          <div>
+            <h5>Späteste Anreise</h5>
+            {{ earliestDeparture }}
+          </div>
+        </div>
+        <div v-if="flexibleSearch" class="flexible_range_select">
+          <h4>Gewünschte Reisedauer:</h4>
+          <select name="flexibleSearchRange" @change="sendFlexibleRange" v-model="selectedFlexibleSearchOption">
+            <option
+              v-for="option in flexibleSearchOptions"
+              :key="'flexibleSearchOptions' + option"
+              :value="option"
+            >
+              {{ option }} <template v-if="option === 1">Nacht</template><template v-else>Nächte</template><template v-if="option % 7 === 0">
+                ({{ option / 7 }} Woche<template v-if="option / 7 > 1">n</template>)</template>
+            </option>
+          </select>
+          <div class="clearfix"></div>
+        </div>
+        <div class="datepicker_additional_information">
+          Die meisten verfügbaren Unterkünfte finden Sie bei An- und Abreise an einem Samstag.
+        </div>
+        <div class="asd__action-buttons" v-if="mode !== 'single' && showActionButtons">
+          <button @click="closeDatepickerCancel" type="button">{{ texts.cancel }}</button>
+          <button
+            ref="apply-button"
+            @click="apply"
+            :style="{ color: colors.selected }"
+            type="button"
+          >
+            {{ texts.apply }}
+          </button>
+        </div>
+        <div v-if="showShortcutsMenuTrigger" class="asd__keyboard-shortcuts-trigger-wrapper">
+          <button
+            class="asd__keyboard-shortcuts-trigger"
+            :aria-label="ariaLabels.openKeyboardShortcutsMenu"
+            tabindex="0"
+            @click="openKeyboardShortcutsMenu"
+          >
+            <span>?</span>
+          </button>
+        </div>
       </div>
     </div>
   </transition>
@@ -676,9 +678,11 @@ export default {
   },
   methods: {
     sendFlexibleRange() {
-      if (this.showDatepicker) {
-        this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption)
-      }
+      this.$nextTick(function(){
+        if (this.showDatepicker) {
+          this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption)
+        }
+      })
     },
     toggleBodyClass(addRemoveClass, className) {
       const el = document.body
