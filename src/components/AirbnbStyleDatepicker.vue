@@ -1,10 +1,9 @@
 <template>
   <transition name="asd__fade">
-    <div class="os24-datepicker-wrapper">
+    <div class="os24-datepicker-wrapper" v-show="showDatepicker">
       <div
         :id="wrapperId"
         class="asd__wrapper"
-        v-show="showDatepicker"
         :class="wrapperClasses"
         :style="showFullscreen ? undefined : wrapperStyles"
         v-click-outside="handleClickOutside"
