@@ -584,13 +584,15 @@ export default {
       this.$emit('date-one-selected', newDate)
     },
     selectedDate2(newValue) {
-      const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
-      this.$emit('date-two-selected', newDate)
-      this.$nextTick(function() {
-        console.log('Second ' + this.flexibleSearchOptions)
-        this.selectedFlexibleSearchOption = this.flexibleSearchOptions
-        this.sendFlexibleRange()
-      })
+      if (this.showDatepicker) {
+        const newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat)
+        this.$emit('date-two-selected', newDate)
+        this.$nextTick(function() {
+          console.log('Second ' + this.flexibleSearchOptions)
+          this.selectedFlexibleSearchOption = this.flexibleSearchOptions
+          this.sendFlexibleRange()
+        })
+      }
     },
     mode() {
       this.setStartDates()

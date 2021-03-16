@@ -472,13 +472,15 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
       this.$emit('date-one-selected', newDate);
     },
     selectedDate2: function selectedDate2(newValue) {
-      var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
-      this.$emit('date-two-selected', newDate);
-      this.$nextTick(function() {
-        console.log('Second ' + this.flexibleSearchOptions);
-        this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
-        this.sendFlexibleRange();
-      });
+      if (this.showDatepicker) {
+        var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
+        this.$emit('date-two-selected', newDate);
+        this.$nextTick(function() {
+          console.log('Second ' + this.flexibleSearchOptions);
+          this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
+          this.sendFlexibleRange();
+        });
+      }
     },
     mode: function mode() {
       this.setStartDates();
