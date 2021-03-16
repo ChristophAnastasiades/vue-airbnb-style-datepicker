@@ -23,6 +23,7 @@
             :mode="'range'"
             :date-one="inputDateOne"
             :date-two="inputDateTwo"
+            :selected-flexible-search-option-prop="2"
             :flexible-search="true"
             :fullscreen-mobile="true"
             :min-date="'2018-08-28'"
