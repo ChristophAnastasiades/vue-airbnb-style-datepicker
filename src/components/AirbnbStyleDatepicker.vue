@@ -233,7 +233,7 @@
           </div>
         </div>
         <div v-if="flexibleSearch" class="flexible_range_select">
-          <h4>Gewünschte Reisedauer:</h4>{{ selectedFlexibleSearchOption }}
+          <h4>Gewünschte Reisedauer:</h4>
           <select name="flexibleSearchRange" v-model="selectedFlexibleSearchOption">
             <option
               v-for="option in flexibleSearchOptions"
