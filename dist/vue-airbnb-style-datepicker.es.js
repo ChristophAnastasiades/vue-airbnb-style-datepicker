@@ -463,6 +463,7 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
   },
   watch: {
     selectedFlexibleSearchOptionProp: function selectedFlexibleSearchOptionProp(newValue) {
+      console.log('First ' + newValue);
       this.selectedFlexibleSearchOption = newValue;
       this.sendFlexibleRange();
     },
@@ -474,6 +475,7 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
       var newDate = !newValue || newValue === '' ? '' : format(newValue, this.dateFormat);
       this.$emit('date-two-selected', newDate);
       this.$nextTick(function() {
+        console.log('Second ' + this.flexibleSearchOptions);
         this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
         this.sendFlexibleRange();
       });
@@ -554,6 +556,7 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
     this.triggerElement.addEventListener('keyup', this.handleTriggerInput);
     this.triggerElement.addEventListener('click', this._handleWindowClickEvent);
 
+    console.log('Third ' + this.selectedFlexibleSearchOptionProp);
     this.selectedFlexibleSearchOption = this.selectedFlexibleSearchOptionProp;
 
     this.sendFlexibleRange();
@@ -569,11 +572,8 @@ return _c('td',{key:index + '_' + dayNumber,ref:("date-" + fullDate),refInFor:tr
   },
   methods: {
     sendFlexibleRange: function sendFlexibleRange() {
-      this.$nextTick(function(){
-        if (this.showDatepicker) {
-          this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption);
-        }
-      });
+      console.log('Sdnging ' + this.selectedFlexibleSearchOption);
+      this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption);
     },
     toggleBodyClass: function toggleBodyClass(addRemoveClass, className) {
       var el = document.body;
