@@ -4870,7 +4870,6 @@
     },
     watch: {
       selectedFlexibleSearchOptionProp: function selectedFlexibleSearchOptionProp(newValue) {
-        console.log('First ' + newValue);
         this.selectedFlexibleSearchOption = newValue;
         this.sendFlexibleRange();
       },
@@ -4883,7 +4882,6 @@
           var newDate = !newValue || newValue === '' ? '' : format_1(newValue, this.dateFormat);
           this.$emit('date-two-selected', newDate);
           this.$nextTick(function() {
-            console.log('Second ' + this.flexibleSearchOptions);
             this.selectedFlexibleSearchOption = this.flexibleSearchOptions;
             this.sendFlexibleRange();
           });
@@ -4965,7 +4963,6 @@
       this.triggerElement.addEventListener('keyup', this.handleTriggerInput);
       this.triggerElement.addEventListener('click', this._handleWindowClickEvent);
 
-      console.log('Third ' + this.selectedFlexibleSearchOptionProp);
       this.selectedFlexibleSearchOption = this.selectedFlexibleSearchOptionProp;
 
       this.sendFlexibleRange();
@@ -4981,7 +4978,6 @@
     },
     methods: {
       sendFlexibleRange: function sendFlexibleRange() {
-        console.log('Sdnging ' + this.selectedFlexibleSearchOption);
         this.$emit('flexible-date-range-selected', this.selectedFlexibleSearchOption);
       },
       toggleBodyClass: function toggleBodyClass(addRemoveClass, className) {
